@@ -1,17 +1,18 @@
-function createBarChart() {
+function createBarChart(crashData) {
+    
 
     var barChart = d3.selectAll('#plot').append('svg').style('width', '100%').style('height', '100%');
     var width = 25;
     var height = 15;
-    console.log(statesData['features']);
+    console.log(crashData);
     var g = barChart.selectAll('.bar')
-        .data(statesData['features'])
+        .data(crashData)
         .enter()
         .append('g')
         .attr('class', 'bar');
     
-    var x = d3.scaleLog().domain([1,1000]).range([0,200]);
-    console.log(x(10));
+    var x = d3.scaleLinear().domain([1,100]).range([0,200]);
+    // console.log(x(10));
 
     g.append('rect')
         .style('stroke-width', '1')
@@ -19,14 +20,14 @@ function createBarChart() {
         .style('fill', 'rgb(200,200,200)')
         .attr('x', 100)
         .attr('y', (d,i) => {return 5+(height+5)*i})
-        .attr('width', (d,i) => {return x(d['properties']['density'])})
+        .attr('width', (d,i) => {return x(Math.abs(d.age))})
         .attr('height', height)
-        .attr('id', (d,i) => {return d['properties']['name'].substring(0, 9)})
+        .attr('id', (d,i) => {return d.id})
 
     g.append('text')
         .attr('x', 0)
         .attr('y', (d,i) => {return 15+(height+5)*i})
-        .text((d,i) => {return d['properties']['name'].substring(0, 9);})
+        .text((d,i) => {return d.id;})
 
 }
 
@@ -43,7 +44,7 @@ function createMap() {
             .range(colorbrewer.YlOrRd[9])
             .domain([0, 1000]);
         return {
-            fillColor: colorScale(feature.properties.density),
+            fillColor: colorScale(feature.sex),
             weight: 2,
             opacity: 1,
             color: 'white',
@@ -62,7 +63,7 @@ function createMap() {
             fillOpacity: 0.7
         });
         
-        var selectedState = layer.feature.properties.name.substring(0, 9);
+        var selectedState = layer.id;
         d3.selectAll("#"+selectedState).style('fill', 'rgb(120,50,50)')
     
         layer.bringToFront();
@@ -88,10 +89,36 @@ function createMap() {
 
 
 function init(){
+    rawcrashData = d3.csv("Traffic_Crashes_Medium2.csv");
+    var crashData = rawCrashData.map(d => ({
+        id : d['PERSON_ID'],
+        city : d['CITY'],
+        state : d['STATE'],
+        sex : d['SEX'],
+        age : +d['AGE'],
+        safety : d['SAFETY_EQUIPMENT'],
+        airbag : d['AIRBAG_DEPLOYED'],
+        injury_class : d['MOST_SEVERE_INJURY'],
+        phy_condition : d['PHYSICAL_CONDITION'],
+        speed_limit: d['POSTED_SPEED_LIMIT'],
+        traffic_control_device : d['TRAFFIC_CONTROL_DEVICE'],
+        device_condition : d['DEVICE_CONDITION'],
+        weather_condition : d['WEATHER_CONDITION'],
+        lighting_condition : d['LIGHTING_CONDITION'],
+        road_condition : d['ROADWAY_SURFACE_COND'],
+        road_defect : d['ROAD_DEFECT'],
+        damage : d['DAMAGE'],
+        injury_count : d['INJURIES_TOTAL'],
+        hour : +d['CRASH_HOUR'],
+        day : +d['CRASH_DAY_OF_WEEK'],
+        month : +d['CRASH_MONTH'],
+        time: +d['TIME']
+      }));
+    crashData.sort(function(a, b){
+        return Math.abs(a.age - b.age)});
     createMap();
-    createBarChart();
+    createBarChart(crashData);
 }
 
 window.onload = init;
 
-d3 = require("d3")
