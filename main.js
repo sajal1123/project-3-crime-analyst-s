@@ -1,4 +1,3 @@
-
 function createBarChart() {
 
     var barChart = d3.selectAll('#plot').append('svg').style('width', '100%').style('height', '100%');
@@ -87,9 +86,12 @@ function createMap() {
 }
 
 
+
 function init(){
     createMap();
     createBarChart();
 }
 
 window.onload = init;
+
+d3 = require("d3")
