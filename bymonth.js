@@ -1,0 +1,12 @@
+var bym = `{"index":"Jan","CITY":175},
+{"index":"Feb","CITY":139},
+{"index":"Mar","CITY":178},
+{"index":"Apr","CITY":188},
+{"index":"May","CITY":236},
+{"index":"Jun","CITY":256},
+{"index":"Jul","CITY":256},
+{"index":"Aug","CITY":213},
+{"index":"Sep","CITY":209},
+{"index":"Oct","CITY":240},
+{"index":"Nov","CITY":201},
+{"index":"Dec","CITY":209}`

@@ -10,26 +10,50 @@
     <script src="us-states.js"></script>
     <script src="Traffic_Crashes.js"></script>
     <script src="main.js"></script>
+    <script src="crashData.js"></script>
+    <script src="bymonth.js"></script>
+    <script src="weather-all.js"></script>
 
     <style class = "scroll">
-        #map { 
+        #staticbar { 
             position: absolute;
-            width: 70%;
-            height: 100%; 
+            width: 50%;
+            height: 100%;
+            left: -100px;
+            top: 5%; 
         }
 
         #plot {
             position: absolute;
-            left: 72%;
-            width: 100%;
+            left: 50%;
+            width: 50%;
             height: 100%; 
         }
     </style>
 
 </head>
 <body>
-    <div id="map"></div>
-    <div id="plot" ,class = "scroll"></div>
+    <div id="staticbar"></div>
+    <div id="plot"></div>
+
+    <div id="wrapper" class="wrapper">
+        <div id="tooltip" class="tooltip">
+            <div class="tooltip-range" id="range"></div>
+            <div class="tooltip-examples" id="examples"></div>
+            <div class="tooltip-value">
+                ...of <span id="count"></span> tasks
+            </div>
+            <div class="tooltip-bar-value">
+                <b><span id="tooltip-bar-value"></span>%</b>
+                of the work was done by developers
+            </div>
+            <div class="tooltip-bar">
+                <div class="tooltip-bar-fill" id="tooltip-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    
 </body>
 
 </html>
