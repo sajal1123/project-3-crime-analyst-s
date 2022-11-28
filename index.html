@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-type" content="text/html" charset="UTF-8">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
@@ -10,9 +10,12 @@
     <script src="us-states.js"></script>
     <script src="Traffic_Crashes.js"></script>
     <script src="main.js"></script>
-    <script src="crashData.js"></script>
+    <!-- <script src="crashData.js"></script> -->
     <script src="bymonth.js"></script>
     <script src="weather-all.js"></script>
+    <script src="interactive_bar.js"></script>
+    <script src="map.js"></script>
+    <script src="Boundaries - Neighborhoods.geojson"></script>
 
     <style class = "scroll">
         #staticbar { 
@@ -23,18 +26,43 @@
             top: 5%; 
         }
 
-        #plot {
+        #hbar1 {
             position: absolute;
             left: 50%;
             width: 50%;
-            height: 100%; 
+            height: 90%; 
+        }
+        #hbar2 {
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            width: 50%;
+            height: 90%; 
+        }
+        #hbar3 {
+            position: absolute;
+            left: 50%;
+            top: 160%;
+            width: 75%;
+            height: 90%; 
+        }
+        #map {
+
+            position: absolute;
+            top: 200%;
+            width:80%;
+            height: 100%;
         }
     </style>
 
 </head>
 <body>
     <div id="staticbar"></div>
-    <div id="plot"></div>
+    <div id="hbar1"></div>
+    <div id="hbar2"></div>
+    <div id="hbar3"></div>
+    <div id="map"></div>
+    <!-- <div id="scatter"></div>
 
     <div id="wrapper" class="wrapper">
         <div id="tooltip" class="tooltip">
@@ -51,9 +79,10 @@
                 <div class="tooltip-bar-fill" id="tooltip-bar-fill"></div>
             </div>
         </div>
-    </div>
-
+    </div> --> 
     
+
+
 </body>
 
 </html>
