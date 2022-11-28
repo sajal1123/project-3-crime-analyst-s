@@ -1,380 +1,80 @@
+function mapper(data, divelement) {
+    var map = L
+  .map('map')
+  .setView([37.8, -96], 4);   // center position + zoom
 
-margin = ({top: 10, right: 20, bottom: 50, left: 105});
-visWidth = 500;
-visHeight = 500;
-color = d3.scaleOrdinal().domain('lighting_condition').range(d3.schemeCategory10);
-// y = d3.scaleLinear()
-//       .domain(d3.extent(crashData, d => d.age)).nice()
-//       .range([visWidth, 0]);
-// x = d3.scaleLinear()
-// .domain(d3.extent(crashData, d=>d.hour)).nice()
-// .range([0, visHeight])
+// Add a tile to the map = a background. Comes from OpenStreetmap
+L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+    maxZoom: 100,
+    }).addTo(map);
 
-xAxis = (g, scale, label) => {
-  g.attr('transform', `translate(0, ${visHeight})`)
-      // add axis
-      .call(d3.axisBottom(scale))
-      // remove baseline
-      // .call(g => g.select('.domain').remove())
-      // add grid lines
-      // references https://observablehq.com/@d3/connected-scatterplot
-      .call(g => g.selectAll('.tick line')
-        .clone()
-          .attr('stroke', '#d3d3d3')
-          .attr('y1', -visHeight)
-          .attr('y2', 0))
-    // add label
-    .append('text')
-      .attr('x', visWidth / 2)
-      .attr('y', 40)
-      .attr('fill', 'black')
-      .attr('text-anchor', 'middle')
-      .text(label)
+// Add a svg layer to the map
+L.svg().addTo(map);
+
+// Create data for circles:
+// var markers = [
+//   {long: 9.083, lat: 42.149}, // corsica
+//   {long: 7.26, lat: 43.71}, // nice
+//   {long: 2.349, lat: 48.864}, // Paris
+//   {long: -1.397, lat: 43.664}, // Hossegor
+//   {long: 3.075, lat: 50.640}, // Lille
+//   {long: -3.83, lat: 48}, // Morlaix
+// ];
+
+var markers = []
+for (let i = 0; i < 2499; i++) {
+    const element = {long : data[i]["LONGITUDE"], lat : data[i]["LATITUDE"]}
+    markers.push(element);    
+}
+console.log(markers);
+
+
+
+// Select the svg area and add circles:
+d3.select("#"+divelement)
+  .select("svg")
+  .selectAll("myCircles")
+  .data(markers)
+  .enter()
+  .append("circle")
+    .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
+    .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
+    .attr("r", 3)
+    .style("fill", "red")
+    .attr("stroke", "red")
+    .attr("stroke-width", 3)
+    .attr("fill-opacity", .4)
+
+// Function that update circle position if something change
+function update() {
+  d3.selectAll("circle")
+    .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
+    .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
 }
 
-yAxis = (g, scale, label) => {
-// add axis
-g.call(d3.axisLeft(scale))
-    // remove baseline
-    // .call(g => g.select('.domain').remove())
-    // add grid lines
-    // refernces https://observablehq.com/@d3/connected-scatterplot
-    .call(g => g.selectAll('.tick line')
-      .clone()
-        .attr('stroke', '#d3d3d3')
-        .attr('x1', 0)
-        .attr('x2', visWidth))
-  // add label
-  .append('text')
-    .attr('x', -40)
-    .attr('y', visHeight / 2)
-    .attr('fill', 'black')
-    .attr('dominant-baseline', 'middle')
-    .text(label)
-}
-  // const data = Array.from(d3.flatGroup(data_original, d=>d[col]), ([key, value]) => ({key, value}))
+// If the user change the map (zoom or drag), I update circle position:
+map.on("moveend", update)
 
-  function find_scale(col) {
-    const data = Array.from(d3.flatGroup(crashData, d=>d[col]), ([key, value]) => ({key, value}))
-    return d3.extent(data, d=>d.value)[1].length
-    
   }
 
-
-function createBarChart(obj, col, y_scale, titl, divelement) {
-
-  const tooltip = d3.select("#tooltip").append('div').style("opacity", 0);
-  
-    const data = obj.sort(function(b, a){
-      return d3.ascending(b.index - a.index)
-    })
-    var barChart = d3.selectAll('#'+divelement).append('svg').style('width', '100%').style('height', '100%').attr('transform', `translate(${margin.left}, ${margin.top})`);
-    // var width = 25;
-    // var height = 15;
-    console.log("DATA",data);
-    console.log("INDEX", data);
-    // console.log("YSCALE = ", y_scale);
-    var g = barChart.selectAll('#'+divelement)
-        .data(obj)
-        .enter()
-        .append('g')
-        // .attr('class', 'bar')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-    var y = d3.scaleLinear()
-              .domain(d3.extent([0, y_scale]))
-              .range([visHeight, 0]);
-    // console.log(data[0], y(data[0]['CITY']));
-    // console.log(data[1], y(data[1]['CITY']));
-    // console.log(data[3], y(data[3]['CITY']));
-    g.append("g")
-    .call(d3.axisLeft(y));
-
-    var x = d3.scaleBand()
-              .domain(data.map(d=>d['index']))
-              .range([0, visWidth])
-              .padding(0.2);
-
-    // var y = d3.scaleLinear().domain([1,300]).range([0,300]);
-    // console.log(y);
-
-    g.append("g")
-    .attr("transform", "translate(0,"+visHeight+")")
-    .call(d3.axisBottom(x))
-    .selectAll('text')
-    .attr('text-anchor', 'end')
-    .attr("transform", "rotate(-45)");
-// .attr("transform", "rotate(-45)");
+function init() {
     
-    g.append('rect')
-        .style('stroke-width', '1')
-        .style('stroke', 'rgb(0,0,0)')
-        // .style('fill', 'rgb(0,200,100)')
-        .attr('y', function (d) { return y(d.CITY); })
-        .attr('x', (d,i) => {return 11+(visHeight-459)*i})
-        .attr('height', (d,i) => {return 500 - y(d['CITY'])})
-        .attr('width', x.bandwidth()-3)
-        .attr('id', (d,i) => {return d['index']})
-        // .attr("title", "Crashes per month");
-        .on('mouseover', hoverOn)
-        .on('mousemove', mousemove)
-        .on('mouseleave', hoverOff);
-    
-
-    g.append('text')
-        .attr('y', 0)
-        .attr('x', visWidth/2-50)
-        .text(titl);
-      
-    g.selectAll('.axes')
-    .attr("transform", "rotate(-45)");
-
-    var hoverOn = function(d) {
-      tooltip.style("opacity", 1)
-      d3.select(this)
-      .style("stroke", "black")
-      .style("opacity", 1)
-    }
-    //   tooltip.select("#range")
-    //   .text(d.CITY)
-    //   // g.attr("opacity", 0.7);
-      
-    // }
-
-    var hoverOff = function(d) {
-      tooltip.style("opacity", 0)
-      d3.select(this)
-      .style("stroke", "none")
-      .style("opacity", 0.8);
-    }
-
-    var mousemove = function(){
-      tooltip.html("The val is "+data.index)
-      .style("left", (d3.pointer(this)[0]+70)+"px")
-      .style("top", (d3.pointer(this)[1]) + "px")
-    }
-
-    const t = barChart.transition()
-    .ease(d3.easeLinear)
-    .duration(500)
-    d3.select('rect')
-    .on('mouseover', () => {
-      d3.select(this).transition()
-      .duration('50')
-      .style('opacity', 0.7)
-    })
-
-    function update(d) { 
-      var u = g.selectAll('rect')
-      .data(d)
-      .join("rect")
-      .style('stroke-width', '1')
-      .style('stroke', 'rgb(0,0,0)')
-      .style("fill", "rgb(0,0,200")
-      .attr("x", function (d) { return x(d.index); })
-      .attr("y", function (d) { return y(d.CITY); })
-      .attr("width", x.bandwidth()-3)
-      .attr("height", (d, i)=> {return 500 - y(d['CITY'])})
-      .on('mouseover', hoverOn)
-      .on('mousemove', mousemove)
-      .on('mouseleave', hoverOff);
-  
-      g.append('text')
-      .text(titl)
-      .attr('x', visWidth/2-50)
-      .attr('y', 0)
-
-      u.transition(t)
-      .duration('500')
-      .attr('height', function(d){return 500 - y(d['CITY'])})
-      .attr('fill', 'rgb(0,200,100)');
-
-      d3.select('rect')
-      .on('mouseover', (d) => {
-        d3.select('rect').transition()
-        .duration(50)
-        .attr('opacity', 0.70)
-      })
-     }
-     update(data);
-
-     return g.node;
-    // console.log(rawData['features'][0]['AGE']);
-}
-
-
-  // const data = Array.from(d3.flatGroup(data_original, d=>d[col]), ([key, value]) => ({key, value}))
-
-  function find_scale(col) {
-    const data = Array.from(d3.flatGroup(crashData, d=>d[col]), ([key, value]) => ({key, value}))
-    return d3.extent(data, d=>d.value)[1].length
-    
-  }
-
-function mainplot(month_obj, wallobj){
-  const bar = createBarChart(month_obj, 'month', 300, "Crashes Per Month", 'staticbar');
-  const barchild = createBarChart(wallobj, 'month', 2050, "Weather Conditions - All Year", 'plot');
-
-  d3.select(bar).on('input', () => {
-    barchild.update(month_obj);
-  });
-}
-
-function brushablescatterplot(data) { 
-
-  const initialValue = data;
-
-  var svg = d3.select("#scatter")
-  .append('g')
-  .style('width', '100%')
-  .style('height', '100%')
-  .property('value', initialValue);
-
-  var g = svg.selectAll('#scatter')
-  .append('g')
-  .attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-  var y = d3.scaleLinear()
-              .domain(d3.extent([0, 100]))
-              .range([visHeight, 0]);
-    // console.log(data[0], y(data[0]['CITY']));
-    // console.log(data[1], y(data[1]['CITY']));
-    // console.log(data[3], y(data[3]['CITY']));
-  
-  var yaxis = d3.axisLeft(y);
-
-    g.append("g")
-    .call(yaxis);
-
-  var x = d3.scaleBand()
-            .domain(data.map(d=>d['index']))
-            .range([0, visWidth])
-            .padding(0.2);
-
-  var xaxis = d3.axisBottom(x);
-
-  // var y = d3.scaleLinear().domain([1,300]).range([0,300]);
-  // console.log(y);
-
-  g.append("g")
-  .attr("transform", "translate(0,"+visHeight+")")
-  .call(xaxis)
-  .selectAll('text')
-  .attr('text-anchor', 'end')
-  .attr("transform", "rotate(-45)");
-// .attr("transform", "rotate(-45)");
-   
-  
-  g.append('text')
-  .text("Age v/s Time of Crash")
-  .attr('x', visWidth/2)
-  .attr('y', 0-margin.top-30)
-  .attr("font-family" , "sans-serif")
-  .attr("font-size" , "14px")
-  .attr("fill" , "black")
-  .attr("text-anchor", "middle")
-
-  const radius = 3;
-
-  const dots = g.selectAll('circle')
-  .data(data)
-  .join('circle')
-  .attr('cx', d=>x(d['TIME'])/60)
-  .attr('cy', d=>y(d['AGE']))
-  .attr('fill', d=>color(d['INJURY_CLASSIFICATION']))
-  .attr('opacity', 1)
-  .attr('r', radius)
-
-  const brush = d3.brush()
-  .extent([[0,0], [visWidth, visHeight]])
-  .on('brush', onBrush)
-  .on('end', onEnd);
-
-  g.append('g').call('brush');
-
-  function onBrush(event) { 
-    const [[x1, y1], [x2, y2]] = event.selection;
-
-    function isBrushed(d){
-      const cx = x(d['TIME'])/60;
-      const cy = y(d['AGE']);
-      return cx >= x1 && cx <=x2 && cy >=y1 && cy<=y2;
-    }
-
-    dots.attr('fill', d => isBrushed(d) ? color(d['INJURY_CLASSIFICATION']) : 'gray');
-    
-    svg.property('value', data.filter(isBrushed).dispatch('input'));
-   }
-
-   function onEnd(event) { 
-    if (event.selection == null){
-      dots.attr('fill', d=>color(d['INJURY_CLASSIFICATION']));
-      svg.property('value', initialValue).dispatch('input');
-    }
-    }
-  return svg.node();
-  }
-
-function init(){
-    // createMap();
-  //   var lines = x.split(/\n/);
-  // var wrapped = "[" + lines.join(",") + "]";
-  // var obj = JSON.parse(wrapped);
-
-  // var groupby = function (a, k) {
-  //   return a.reduce((acc, ob) => {
-  //     const key = ob[k];
-  //     if (!acc[k]){
-  //       acc[k] = 1;
-  //     }
-  //     acc[k]+=1;
-  //     return acc;
-  //   }, {});
-  //   }
-  //   var by_month = JSON.parse(bym);
-
-  // var months = bym.split(/j/);
-  // var rapped = "[" + months.join(",") + "]";
-  // var month_obj = JSON.parse(rapped);
-  // // console.log("months obj",month_obj);
-  // // console.log("months",months);
-  //   // by_month = groupby(obj, [0,1,2,3,4,5,6,7,8,9,10,11]);
-  // // a = createBarChart(month_obj, 'month', 300, "Crashes per Month", 'staticbar');
-
-  // var wall = weather_all.split(/\n/);
-  // var wall2 = "[" + wall.join(",")+"]";
-  // console.log("WALL = ", wall);
-  // console.log("Wall2 = ", wall2);
-  // var wallobj = JSON.parse(wall2);
-
   var crd = cc.split(/\n/);
   var crd2 = "["+crd.join(",")+"]";
-  // console.log("CRASH DATA = ",crd);
-  // console.log("CRASH DATA PROCESSED =", crd2);
-
   var cro = JSON.parse(crd2);
-  // console.log("CRASH DATA FINAL = ", cro);
-  const data1 = Array.from(d3.flatGroup(cro, d=>d.CRASH_MONTH), ([key, value]) => ({key, value}))
+//   const data1 = Array.from(d3.flatGroup(cro, d=>d.CRASH_MONTH), ([key, value]) => ({key, value}))
 
-  console.log("GROUPED DATAAAAAA = ", data1);
+//   console.log("GROUPED DATAAAAAA = ", data1);
 
-  // brushablescatterplot(cro);
-  // mainplot();
+    
+  mapper(cro, 'map');
 
-  // createBarChart(month_obj, 'month', 300, "Crashes per Month", 'staticbar');
-  // mainplot(month_obj, wallobj);
-  // console.log("THIS IS B = ",b);
-  // d3.selectAll('rect')
-  // .on('click', () => createBarChart(month_obj, 'month', 300, "Crashes Per Month", 'plot'));
-
-  // createBarChart(obj);
-  // scatterplot();
-    // brushableScatterplot();
-    // createBarChart();
+    
 }
 
-window.onload = init;
-
+window.onload = init
 
 const cc = `{"CITY":"CHICAGO","ZIPCODE":"60622","SEX":"M","AGE":44.0,"INJURY_CLASSIFICATION":"NO INDICATION OF INJURY","PHYSICAL_CONDITION":"NORMAL","WEATHER_CONDITION":"CLEAR","LIGHTING_CONDITION":"DAYLIGHT","ROAD_DEFECT":"NO DEFECTS","DAMAGE":"OVER $1,500","MOST_SEVERE_INJURY":"NO INDICATION OF INJURY","INJURIES_TOTAL":0.0,"INJURIES_FATAL":0.0,"INJURIES_INCAPACITATING":0.0,"INJURIES_NON_INCAPACITATING":0.0,"INJURIES_REPORTED_NOT_EVIDENT":0.0,"INJURIES_NO_INDICATION":3.0,"INJURIES_UNKNOWN":0.0,"CRASH_HOUR":16,"CRASH_DAY_OF_WEEK":6,"CRASH_MONTH":4,"LATITUDE":41.898925063,"LONGITUDE":-87.724909933,"LOCATION":"POINT (-87.72490993269 41.898925063282)","CRASH_YEAR_y":2021,"TIME":974}
 {"CITY":"CHICAGO","ZIPCODE":"60629","SEX":"F","AGE":31.0,"INJURY_CLASSIFICATION":"NONINCAPACITATING INJURY","PHYSICAL_CONDITION":"NORMAL","WEATHER_CONDITION":"CLEAR","LIGHTING_CONDITION":"DAYLIGHT","ROAD_DEFECT":"NO DEFECTS","DAMAGE":"OVER $1,500","MOST_SEVERE_INJURY":"NONINCAPACITATING INJURY","INJURIES_TOTAL":3.0,"INJURIES_FATAL":0.0,"INJURIES_INCAPACITATING":0.0,"INJURIES_NON_INCAPACITATING":2.0,"INJURIES_REPORTED_NOT_EVIDENT":1.0,"INJURIES_NO_INDICATION":0.0,"INJURIES_UNKNOWN":0.0,"CRASH_HOUR":19,"CRASH_DAY_OF_WEEK":6,"CRASH_MONTH":8,"LATITUDE":41.77894575,"LONGITUDE":-87.703283119,"LOCATION":"POINT (-87.703283119003 41.77894575018)","CRASH_YEAR_y":2021,"TIME":1140}
