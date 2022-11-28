@@ -1,4 +1,9 @@
-highlight_color = "#ffd700";
+margin = ({top: 10, right: 20, bottom: 50, left: 105});
+visWidth = 500;
+visHeight = 500;
+color = d3.scaleOrdinal().domain('lighting_condition').range(d3.schemeCategory10);
+highlight_color = "#66FF22";
+
 function barchartI(crashData, divelement){
 
   const initialValue = crashData;
@@ -220,13 +225,13 @@ function barChart(data, col, title, divelement) {
     // color = d3.scaleOrdinal().domain('injury').range(d3.schemeCategory10);
     
     const colDomain = Array.from(new Set(data.map(d=>d.col)))
-    const colors = d3.scaleOrdinal().domain(colDomain).range(d3.schemeCategory10);
+    // const colors = d3.scaleOrdinal().domain(colDomain).range(d3.schemeCategory10);
     
     // draw bars
     barsGroup.selectAll("rect")
       .data(originCounts)
       .join("rect")
-        .attr("fill", ([col, count]) => colors(col))
+        .attr("fill", ([col, count]) => color(col))
         .attr("height", y.bandwidth())
         .attr("x", 0)
         .attr("y", ([col, count]) => y(col))

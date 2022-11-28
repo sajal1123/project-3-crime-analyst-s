@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html" charset="UTF-8">
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script>
+    <script src="Traffic_Crashes.js"></script>
+    <script src="interactive_bar.js"></script>
+    <script src="crashData.js"></script>
+    
+    <style class = "scroll">
+        #staticbar { 
+            position: absolute;
+            width: 100%;
+            height: 120%;
+            left: -100px;
+            top: 5%; 
+        }
+
+        #hbar1 {
+            position: absolute;
+            left: 50%;
+            width: 50%;
+            height: 120%; 
+        }
+        #hbar2 {
+            position: absolute;
+            top: 75%;
+            left: 50%;
+            width: 50%;
+            height: 120%; 
+        }
+        #hbar3 {
+            position: absolute;
+            left: -100px;
+            top: 75%;
+            width: 75%;
+            height: 120%; 
+        }
+    </style>
+
+</head>
+<body>
+    <a href="index.html">
+        <button>Home</button>
+    </a>
+    <div id="staticbar"></div>
+    <div id="hbar1"></div>
+    <div id="hbar2"></div>
+    <div id="hbar3"></div>
+
+</body>
+
+</html>

@@ -3,33 +3,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Bar</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://d3js.org/colorbrewer.v1.min.js"></script>
-    <script src="us-states.js"></script>
-    <!-- <script src="map.js"></script> -->
-    
-    <style class = "scroll">
-        #map {
-
-            position: absolute;
-            width:80%;
-            height: 100%;
-        }
-    </style>
-
+<title>Scatterplot</title>
 </head>
+<script src="brushable_scatterplot.js"></script>
+<script src="crashData.js"></script>
+
+<style class="scroll">
+    #scatter {
+        position:absolute;
+        left: 10%;
+        top: 10%;
+    }
+</style>
+
 <body>
-    <a href="Multilinked-Bar.html">
-        <button>Milti Linked Bar Chart</button>
+    <a href="index.html">
+        <button>Home</button>
     </a>
-    <a href="scatter.html">
-        <button>Brushable Scatterplot</button>
-    </a>
-    <!-- <div id="map"></div> -->
-
+    <div id="scatter"></div>
 </body>
-
 </html>
