@@ -6,7 +6,7 @@ function barchartI(crashData, divelement){
   console.log("barChartI() call made!!!!!!!!!!");  
   
   const data1 = Array.from(d3.flatGroup(crashData, d=>d.CRASH_MONTH), ([key, value]) => ({key, value}))
-
+  console.log("crashdata: " + crashData )
   const svg = d3.select("#"+divelement)
   .append('svg')
   .style('width', '100%')
@@ -32,7 +32,7 @@ function barchartI(crashData, divelement){
     .domain(data.map(d=>d.key)).padding(0.2);
 
   var y = d3.scaleLinear()
-    .domain(d3.extent([0, 400]))
+    .domain(d3.extent([0, 300]))
     .range([visHeight, 0]);
 
   g.append("g")
@@ -115,9 +115,12 @@ function barchartI(crashData, divelement){
       function isMonth(d){
         return d.month == i.key;
       }
-      barChart(crashData.filter(isMonth), "DAMAGE", "NEW", "hbar1");
-      console.log(i.key+' - '+i.value.length+"hAS BEEN CLICKED");
-      svg.property('value', crashData.filter(isMonth)).dispatch('input');
+      // barChart(crashData.filter(isMonth), "DAMAGE", "NEW", "hbar1");
+      console.log(i.key+' - value: '+i.value.length+" HAS BEEN CLICKED");
+      // const size = crashData.filter(d=> d.month == i.key);
+      // console.log(size);
+      const newData = i.value;
+      svg.property('value', newData).dispatch('input');
     });
 
   update(data);
@@ -277,7 +280,7 @@ function init() {
 
   console.log("GROUPED DATAAAAAesgdsgdgA = ", data1);
 
-  console.log(cro);
+  console.log("CRO: " + cro);
 
   // console.log(barchartI(data1));
 
