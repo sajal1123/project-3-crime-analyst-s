@@ -1,7 +1,7 @@
 function mapper(data, divelement) {
     var map = L
   .map('map')
-  .setView([37.8, -96], 4);   // center position + zoom
+  .setView([41.9, -87.75], 10);   // center position + zoom
 
 // Add a tile to the map = a background. Comes from OpenStreetmap
 L.tileLayer(
@@ -25,7 +25,7 @@ L.svg().addTo(map);
 
 var markers = []
 for (let i = 0; i < 2499; i++) {
-    const element = {long : data[i]["LONGITUDE"], lat : data[i]["LATITUDE"]}
+    const element = {long : data[i]["LONGITUDE"], lat : data[i]["LATITUDE"], time : data[i]["CRASH_HOUR"]}
     markers.push(element);    
 }
 console.log(markers);
@@ -33,7 +33,7 @@ console.log(markers);
 
 
 // Select the svg area and add circles:
-d3.select("#"+divelement)
+var loc = d3.select("#"+divelement)
   .select("svg")
   .selectAll("myCircles")
   .data(markers)
@@ -41,18 +41,69 @@ d3.select("#"+divelement)
   .append("circle")
     .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
     .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
-    .attr("r", 3)
+    .attr("r", 1.5)
     .style("fill", "red")
     .attr("stroke", "red")
     .attr("stroke-width", 3)
     .attr("fill-opacity", .4)
 
+// d3.select("input")
+// .attr("type", "range")
+// .attr("x", "700px")
+// .attr("y", "200px")
+// .attr("min", "00")
+// .attr("max", "23")
+// .attr("step", "1")
+// .attr("id", "time")
+// .on("slide", function (event, val) {
+//     console.log(event, val);
+//     update_time();
+//  })
+
+
+var slider = document.getElementById('slider');
+
+noUiSlider.create(slider, {
+    start: [20, 80],
+    connect: false,
+    range: {
+        'min': 0,
+        'max': 100
+    }
+});
+
+// s = slider({value: 1, min: 0, max: 23, step:1});
+// update_time(s.value);
 // Function that update circle position if something change
 function update() {
   d3.selectAll("circle")
     .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
     .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
 }
+
+function update_time(yr) { 
+    // var yr = s;
+    // document.getElementById("output").innerHTML = yr
+    console.log(yr);
+    var new_markers = markers.filter(function (d) { if(d.time == yr){ return true; }}); 
+
+    var c = loc.selectAll("circle");
+    var join = c.data(new_markers);
+    var enter = join.enter();
+    var exit = join.exit();
+
+    enter.append("circle")
+    .attr("cx", function(d) { return map.latLngToLayerPoint([d.lat, d.long]).x; })
+        .attr("cy", function(d) { return latLngToLayerPoint([d.lat, d.long]).y; })
+        .attr("r", 1.5)
+        .style("fill", "red")
+        .attr("stroke", "red")
+        .attr("stroke-width", 3)
+        .attr("fill-opacity", .4)
+    exit.remove();
+
+    }
+    // update_time();
 
 // If the user change the map (zoom or drag), I update circle position:
 map.on("moveend", update)
