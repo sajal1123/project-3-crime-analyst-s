@@ -68,7 +68,7 @@ document.getElementById("time").oninput = update;
 function update() {
     var hr = document.getElementById("time").value;
     document.getElementById('output').innerHTML = hr
-    console.log("There are "+hr);
+    // console.log("There are "+hr);
     
   d3.selectAll("circle")
     .attr("cx", function(d){ if(d.time==hr){ return map.latLngToLayerPoint([d.lat, d.long]).x }})
