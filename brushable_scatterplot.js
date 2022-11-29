@@ -172,7 +172,7 @@ function brushableScatterplot(crashData, divelement) {
 
   var x = d3.scaleLinear()
     .domain([0, 24])
-    .range([ 0, 400 ]);
+    .range([ 0, 250 ]);
 
 
   var y = d3.scaleLinear()
