@@ -60,25 +60,21 @@ var loc = d3.select("#"+divelement)
 //     update_time();
 //  })
 
+slider = d3.select("time")
+.on("input", update);
 
-var slider = document.getElementById('slider');
-
-noUiSlider.create(slider, {
-    start: [20, 80],
-    connect: false,
-    range: {
-        'min': 0,
-        'max': 100
-    }
-});
 
 // s = slider({value: 1, min: 0, max: 23, step:1});
 // update_time(s.value);
 // Function that update circle position if something change
 function update() {
+    var hr = document.getElementById("time").value;
+    console.log("There are "+hr);
+    
   d3.selectAll("circle")
-    .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
-    .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
+    .attr("cx", function(d){ if(d.time==hr){ return map.latLngToLayerPoint([d.lat, d.long]).x }})
+    .attr("cy", function(d){ if(d.time==hr){ return map.latLngToLayerPoint([d.lat, d.long]).y }})
+    // update_time(hr);
 }
 
 function update_time(yr) { 
