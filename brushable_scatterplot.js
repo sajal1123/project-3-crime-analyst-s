@@ -1,6 +1,6 @@
 margin = ({top: 10, right: 20, bottom: 50, left: 105});
-visWidth = 300;
-visHeight = 300;
+visWidth = 250;
+visHeight = 250;
 color = d3.scaleOrdinal().domain('lighting_condition').range(d3.schemeCategory10);
 highlight_color = "#66FF22";
 
@@ -215,14 +215,14 @@ function brushableScatterplot(crashData, divelement) {
 
   var x = d3.scaleLinear()
     .domain([0, 24])
-    .range([ 0, 300 ]);
+    .range([ 0, 250 ]);
   // g.append("g")
   //   .attr("transform", "translate(0," + 400 + ")")
   //   .call(d3.axisBottom(x));
 
   var y = d3.scaleLinear()
     .domain(d3.extent([0, 100]))
-    .range([ 300, 0]);
+    .range([ 250, 0]);
   g.append("g")
     .call(d3.axisLeft(y));
 
@@ -258,14 +258,14 @@ function brushableScatterplot(crashData, divelement) {
   
   const radius = 3;
   
-  const dots = g.selectAll('dot')
+  const dots = g.selectAll('circle')
     .data(crashData)
     .enter()
     .append('circle')
       .attr('cx', x(crashData.TIME/60))
       .attr('cy', y(crashData.AGE))
       .attr('fill', color(crashData.MOST_SEVERE_INJURY))
-      // .attr('opacity', 1)
+      .attr('opacity', 1)
       .attr('r', radius);
   
   // ********** brushing here **********
