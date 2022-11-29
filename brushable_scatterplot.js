@@ -49,10 +49,11 @@ function barChart(data, col, title, divelement) {
       .attr("transform", `translate(0, ${visWidth})`);
   
   xAxisGroup.append("text")
-      .attr("x", visWidth / 2)
+      .attr("x", visWidth / 2 + 100)
       .attr("y", 40)
       .attr("fill", "black")
       .attr("text-anchor", "middle")
+      .attr('font-size', '12px')
       .text("Count");
   
   const yAxis = d3.axisLeft(y);
@@ -64,10 +65,11 @@ function barChart(data, col, title, divelement) {
           g
     .append('text')
     .text(title)
-    .attr('x', visWidth/2)
+    .attr('x', visWidth/2 + 80)
     .attr('y', 0-margin.top-30) 
     .attr("fill" , "black")
     .attr("text-anchor", "middle")
+    .attr('font-size', '18px')
 
     
   let barsGroup = g.append("g");
@@ -191,14 +193,32 @@ function brushableScatterplot(crashData, divelement) {
 
   g.append('text')
     .text("Age v/s Time of Crash")
-    .attr('x', visWidth/2)
+    .attr('x', visWidth/2 + 80)
     .attr('y', 0-margin.top-30) 
     .attr("font-family" , "sans-serif")
-    .attr("font-size" , "14px")
+    .attr("font-size" , "18px")
     .attr("fill" , "black")
     .attr("text-anchor", "middle")
 
-  
+    g.append('text')
+    .text("Age")
+    .attr('x', -175)
+    .attr('y', -34) 
+    .attr("font-family" , "sans-serif")
+    .attr("font-size" , "12px")
+    .attr("fill" , "black")
+    .attr("text-anchor", "middle")
+    .attr('transform', "rotate(-90)")
+
+    g.append('text')
+    .text("Hour of Day")
+    .attr('x', visWidth/2 + 50)
+    .attr('y', visHeight+140) 
+    .attr("font-family" , "sans-serif")
+    .attr("font-size" , "12px")
+    .attr("fill" , "black")
+    .attr("text-anchor", "middle")
+
   // draw points
   
   const radius = 3;
