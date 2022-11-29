@@ -1,5 +1,5 @@
 margin = ({top: 10, right: 20, bottom: 50, left: 105});
-visWidth = 250;
+visWidth =250;
 visHeight = 250;
 color = d3.scaleOrdinal().domain('lighting_condition').range(d3.schemeCategory10);
 highlight_color = "#66FF22";
@@ -34,7 +34,7 @@ function barChart(data, col, title, divelement) {
   // create scales
   
   const x = d3.scaleLinear()
-      .range([0, visWidth]);
+      .range([0, visWidth+150]);
   
   const y = d3.scaleBand()
       .domain(d3.map(data, d=>d[col]))
@@ -151,38 +151,39 @@ function brushableScatterplot(crashData, divelement) {
   // the value for when there is no brush
   x = d3.scaleLinear()
       .domain(d3.extent(crashData, crashData.CRASH_HOUR)).nice()
-      .range([0, visHeight]);
+      .range([0, visWidth]);
 
   y = d3.scaleLinear()
         .domain(d3.extent(crashData, crashData.AGE)).nice()
-        .range([visWidth, 0])
+        .range([visHeight, 0])
 
   const initialValue = crashData;
 
   const svg = d3.select("#"+divelement)
       .append('svg')
-      .attr('width', visWidth + margin.left + margin.right)
-      .attr('height', visHeight + margin.top + margin.bottom+100)
+      .attr('width', visWidth + margin.left + margin.right+200)
+      .attr('height', visHeight + margin.top + margin.bottom+300)
       .property('value', initialValue);
 
   const g = svg.append('g')
-      .attr('transform', `translate(${margin.left}, ${margin.top+100})`);
+      .attr('transform', `translate(${margin.left}, ${margin.top+100})`)
+      .attr('width', visWidth+100);
   
 
   var x = d3.scaleLinear()
     .domain([0, 24])
-    .range([ 0, 250 ]);
+    .range([ 0, 400 ]);
 
 
   var y = d3.scaleLinear()
     .domain(d3.extent([0, 100]))
-    .range([ 250, 0]);
+    .range([ 350, 0]);
   g.append("g")
     .call(d3.axisLeft(y));
 
 
   g.append("g")
-    .attr("transform", "translate(0,"+visHeight+")")
+    .attr("transform", "translate(0,"+350+")")
     .call(d3.axisBottom(x))
     .selectAll("text")
     .attr("transform", "translate(-10,0)rotate(-15)")
@@ -216,7 +217,7 @@ function brushableScatterplot(crashData, divelement) {
   
   const brush = d3.brush()
       // set the space that the brush can take up
-      .extent([[0, 0], [visWidth, visHeight]])
+      .extent([[0, 0], [visWidth+150, visHeight+100]])
       // handle events
       .on('brush', onBrush)
       .on('end', onEnd);

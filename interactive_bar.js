@@ -14,8 +14,8 @@ function barchartI(crashData, divelement){
   console.log("crashdata: " + crashData )
   const svg = d3.select("#"+divelement)
   .append('svg')
-  .style('width', '100%')
-  .style('height', '100%')
+  .style('width', '110%')
+  .style('height', '110%')
   // .attr('transform', `translate(${margin.left}, ${margin.top})`)
   .property('value', initialValue);
   
@@ -150,7 +150,7 @@ function barChart(data, col, title, divelement) {
 
   const svg = d3.select("#"+divelement)
   .append('svg')
-  .style('width', '100%')
+  .style('width', '70%')
   .style('height', '100%')
   // .attr('transform', `translate(${margin.left}, ${margin.top})`)
   // .property('value', initialValue);
@@ -248,8 +248,8 @@ function interactivePlot(data){
   // const scatter = brushableScatterplot();
   const bar = barchartI(data, "staticbar");
   const bar1 = barChart(data,'WEATHER_CONDITION', 'Weather Conditions', "hbar1");
-  const bar2 = barChart(data, 'MOST_SEVERE_INJURY', 'Driver Injury', "hbar2");
-  const bar3 = barChart(data, 'ROADWAY_CONDITION','Road Conditions', "hbar3");
+  const bar2 = barChart(data, 'LIGHTING_CONDITION', 'Lighting Conditions', "hbar2");
+  const bar3 = barChart(data, 'ROAD_DEFECT','Road Conditions', "hbar3");
 
   // update the bar chart when the scatterplot
   // selection changes
