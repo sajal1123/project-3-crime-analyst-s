@@ -213,29 +213,29 @@ function brushableScatterplot(crashData, divelement) {
   // g.append("g").call(xAxis, x, 'Hour of Day');
   // g.append("g").call(yAxis, y, 'Age');
 
-  // var x = d3.scaleLinear()
-  //   .domain([0, 24])
-  //   .range([ 0, 300 ]);
-  // svg.append("g")
+  var x = d3.scaleLinear()
+    .domain([0, 24])
+    .range([ 0, 300 ]);
+  // g.append("g")
   //   .attr("transform", "translate(0," + 400 + ")")
   //   .call(d3.axisBottom(x));
 
-  // var y = d3.scaleLinear()
-  //   .domain(d3.extent([0, 100]))
-  //   .range([ 300, 0]);
-  // svg.append("g")
-  //   .call(d3.axisLeft(y));
-
-  var x = d3.scaleBand()
-    .range([0, 300])
-    .domain([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]);
-
   var y = d3.scaleLinear()
     .domain(d3.extent([0, 100]))
-    .range([300, 0]);
-
+    .range([ 300, 0]);
   g.append("g")
     .call(d3.axisLeft(y));
+
+  // var x = d3.scaleBand()
+  //   .range([0, 300])
+  //   .domain([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]);
+
+  // var y = d3.scaleLinear()
+  //   .domain(d3.extent([0, 100]))
+  //   .range([300, 0]);
+
+  // g.append("g")
+  //   .call(d3.axisLeft(y));
 
   g.append("g")
     .attr("transform", "translate(0,"+visHeight+")")
