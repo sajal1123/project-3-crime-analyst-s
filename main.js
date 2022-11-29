@@ -1,7 +1,7 @@
 
 margin = ({top: 10, right: 20, bottom: 50, left: 105});
-visWidth = 500;
-visHeight = 500;
+visWidth = 250;
+visHeight = 250;
 color = d3.scaleOrdinal().domain('lighting_condition').range(d3.schemeCategory10);
 y = d3.scaleLinear()
       .domain(d3.extent(crashData, d => d.age)).nice()

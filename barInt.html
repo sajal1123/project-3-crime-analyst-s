@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html" charset="UTF-8">
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script>
+    <script src="Traffic_Crashes.js"></script>
+    <script src="button_bar.js"></script>
+    <script src="crashData.js"></script>
+    
+    <style class = "scroll">
+        #staticbar { 
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            top: 5%; 
+            /* clear: top; */
+        }
+
+        #hbar1 {
+            position: absolute;
+            top: 6%;
+            left: 30%;
+            width: 50%;
+            height: 120%; 
+        }
+        #hbar2 {
+            position: absolute;
+            top: 6%;
+            left: 60%;
+            width: 50%;
+            height: 120%; 
+        }
+        /* #hbar3 {
+            position: absolute;
+            left: -100px;
+            top: 50%;
+            width: 75%;
+            height: 120%; 
+        } */
+    </style>
+
+</head>
+<body>
+    <a href="index.html">
+        <button>Home</button>
+    </a>
+    <button onclick = "summer();">Summers</button>
+    <button onclick = "winter();">Winters</button>
+    <button onclick = "allyear();">All Year</button>
+    <div id="staticbar"></div>
+    <div id="hbar1"></div>
+    <div id="hbar2"></div>
+    <!-- <div id="hbar3"></div> -->
+
+    <script>
+        w = crashData.filter(c => c.CRASH_MONTH<5 && c.CRASH_MONTH>8);
+        summers = crashData.filter(c => c.CRASH_MONTH>4 && c.CRASH_MONTH<9);
+        
+        function summer(){
+            
+            console.log("Summer clicked");
+            barchart1(summers, 'WEATHER_CONDITION', find_scale('WEATHER_CONDITION'), "Weather Condition - Summers", "staticbar");
+            barchart1(summers, 'MOST_SEVERE_INJURY', find_scale('MOST_SEVERE_INJURY'), "Driver Injury - Summers", "hbar1");
+            barchart1(summers, 'ROADWAY_SURFACE_COND', find_scale('ROADWAY_SURFACE_COND'), "Road Condition - Summers","hbar2");
+        }
+
+        function winter(){
+            
+            console.log("winter clicked" + w);
+            barchart1(crashData.filter(c => c.CRASH_MONTH<5 && c.CRASH_MONTH>8), 'WEATHER_CONDITION', find_scale('WEATHER_CONDITION'), "Weather Condition - Winters","staticbar");
+            barchart1(w, 'MOST_SEVERE_INJURY', find_scale('MOST_SEVERE_INJURY'), "Driver Injury - Summers", "hbar1");
+            barchart1(w, 'ROADWAY_SURFACE_COND', find_scale('ROADWAY_SURFACE_COND'), "Road Condition - Summers","hbar2");
+        }
+
+        function allyear(){
+            console.log("allyear clicked");
+            barchart1(crashData, 'WEATHER_CONDITION', find_scale('WEATHER_CONDITION'), "Weather Condition - All Year","staticbar");
+            barchart1(crashData, 'MOST_SEVERE_INJURY', find_scale('MOST_SEVERE_INJURY'), "Driver Injury - Summers", "hbar1");
+            barchart1(crashData, 'ROADWAY_SURFACE_COND', find_scale('ROADWAY_SURFACE_COND'), "Road Condition - Summers","hbar2");
+        }
+
+    </script>
+
+</body>
+
+</html>
