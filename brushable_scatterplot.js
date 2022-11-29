@@ -260,13 +260,23 @@ function brushableScatterplot(crashData, divelement) {
   
   const dots = g.selectAll('circle')
     .data(crashData)
-    .enter()
-    .append('circle')
-      .attr('cx', x(crashData.TIME/60))
-      .attr('cy', y(crashData.AGE))
-      .attr('fill', color(crashData.MOST_SEVERE_INJURY))
+    .join('circle')
+    .attr('cx', d => x(d.TIME)/60)
+    .attr('cy', d => y(d.AGE))
+    .attr('fill', d =>  color(d.MOST_SEVERE_INJURY))
       .attr('opacity', 1)
       .attr('r', radius);
+
+
+      // barsGroup.selectAll("rect")
+      // .data(originCounts)
+      // .join("rect")
+      //   .attr("fill", ([col, count]) => color(col))
+      //   .attr("height", y.bandwidth())
+      //   .attr("x", 0)
+      //   .attr("y", ([col, count]) => y(col))
+      // .transition(t)
+      //   .attr("width", ([col, count]) => x(count))
   
   // ********** brushing here **********
   
