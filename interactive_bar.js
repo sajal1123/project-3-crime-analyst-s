@@ -247,9 +247,9 @@ function barChart(data, col, title, divelement) {
 function interactivePlot(data){
   // const scatter = brushableScatterplot();
   const bar = barchartI(data, "staticbar");
-  const bar1 = barChart(data,'INJURY_CLASSIFICATION', 'Injury Severity', "hbar1");
-  const bar2 = barChart(data, 'DAMAGE', 'Damage Cost', "hbar2");
-  const bar3 = barChart(data, 'SEX','Gender', "hbar3");
+  const bar1 = barChart(data,'WEATHER_CONDITION', 'Weather Conditions', "hbar1");
+  const bar2 = barChart(data, 'MOST_SEVERE_INJURY', 'Driver Injury', "hbar2");
+  const bar3 = barChart(data, 'ROADWAY_CONDITION','Road Conditions', "hbar3");
 
   // update the bar chart when the scatterplot
   // selection changes

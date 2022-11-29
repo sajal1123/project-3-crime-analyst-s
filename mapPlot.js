@@ -60,15 +60,14 @@ var loc = d3.select("#"+divelement)
 //     update_time();
 //  })
 
-slider = d3.select("time")
-.on("input", update);
-
+document.getElementById("time").oninput = update;
 
 // s = slider({value: 1, min: 0, max: 23, step:1});
 // update_time(s.value);
 // Function that update circle position if something change
 function update() {
     var hr = document.getElementById("time").value;
+    document.getElementById('output').innerHTML = hr
     console.log("There are "+hr);
     
   d3.selectAll("circle")
