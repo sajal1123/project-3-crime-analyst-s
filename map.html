@@ -16,18 +16,35 @@
 
     <style>
         #map {
-            height: 600px;
-            width: 600px;
+            height: 700px;
+            width: 900px;
         }
+
+        #time {
+            left: 700px;
+            top: 650px;
+        }
+
     </style>
 
 </head>
 <body>
 
-    <a href="index.html">
-        <button>Home</button>
+    <a href="Multilinked-Bar.html">
+        <button>Milti Linked Bar Chart</button>
     </a>
-    <div id="map"></div>
+    <a href="scatter.html">
+        <button>Brushable Scatterplot</button>
+    </a>
+    <a href="barInt.html">
+        <button>Interactive Bar Chart</button>
+    <a href="map.html">
+        <button>Map</button>
+    </a>
     
+    <div id="map"></div>
+
+    <input id="time" type="range" min="0" max="23" step="1"  value="12">
+    <output id="output"></output>
 </body>
 </html>
