@@ -157,47 +157,6 @@ function brushableScatterplot(crashData, divelement) {
         .domain(d3.extent(crashData, crashData.AGE)).nice()
         .range([visWidth, 0])
 
-  xAxis = (g, scale, label) =>
-    g.attr('transform', `translate(0, ${visHeight})`)
-        // add axis
-        .call(d3.axisBottom(scale))
-        // remove baseline
-        .call(g => g.select('.domain').remove())
-        // add grid lines
-        // references https://observablehq.com/@d3/connected-scatterplot
-        .call(g => g.selectAll('.tick line')
-          .clone()
-            .attr('stroke', '#d3d3d3')
-            .attr('y1', -visHeight)
-            .attr('y2', 0))
-      // add label
-      .append('text')
-        .attr('x', visWidth / 2)
-        .attr('y', 40)
-        .attr('fill', 'black')
-        .attr('text-anchor', 'middle')
-        .text(label)
-
-  yAxis = (g, scale, label) => 
-      // add axis
-      g.call(d3.axisLeft(scale))
-          // remove baseline
-          .call(g => g.select('.domain').remove())
-          // add grid lines
-          // refernces https://observablehq.com/@d3/connected-scatterplot
-          .call(g => g.selectAll('.tick line')
-            .clone()
-              .attr('stroke', '#d3d3d3')
-              .attr('x1', 0)
-              .attr('x2', visWidth))
-        // add label
-        .append('text')
-          .attr('x', -40)
-          .attr('y', visHeight / 2)
-          .attr('fill', 'black')
-          .attr('dominant-baseline', 'middle')
-          .text(label)
-
   const initialValue = crashData;
 
   const svg = d3.select("#"+divelement)
@@ -209,16 +168,11 @@ function brushableScatterplot(crashData, divelement) {
   const g = svg.append('g')
       .attr('transform', `translate(${margin.left}, ${margin.top+100})`);
   
-  // axes
-  // g.append("g").call(xAxis, x, 'Hour of Day');
-  // g.append("g").call(yAxis, y, 'Age');
 
   var x = d3.scaleLinear()
     .domain([0, 24])
     .range([ 0, 250 ]);
-  // g.append("g")
-  //   .attr("transform", "translate(0," + 400 + ")")
-  //   .call(d3.axisBottom(x));
+
 
   var y = d3.scaleLinear()
     .domain(d3.extent([0, 100]))
@@ -226,16 +180,6 @@ function brushableScatterplot(crashData, divelement) {
   g.append("g")
     .call(d3.axisLeft(y));
 
-  // var x = d3.scaleBand()
-  //   .range([0, 300])
-  //   .domain([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]);
-
-  // var y = d3.scaleLinear()
-  //   .domain(d3.extent([0, 100]))
-  //   .range([300, 0]);
-
-  // g.append("g")
-  //   .call(d3.axisLeft(y));
 
   g.append("g")
     .attr("transform", "translate(0,"+visHeight+")")
@@ -268,16 +212,6 @@ function brushableScatterplot(crashData, divelement) {
       .attr('r', radius);
 
 
-      // barsGroup.selectAll("rect")
-      // .data(originCounts)
-      // .join("rect")
-      //   .attr("fill", ([col, count]) => color(col))
-      //   .attr("height", y.bandwidth())
-      //   .attr("x", 0)
-      //   .attr("y", ([col, count]) => y(col))
-      // .transition(t)
-      //   .attr("width", ([col, count]) => x(count))
-  
   // ********** brushing here **********
   
   const brush = d3.brush()
