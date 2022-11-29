@@ -23,8 +23,8 @@ function barChart(data, col, title, divelement) {
 
   const svg = d3.select("#"+divelement)
   .append('svg')
-  .style('width', '100%')
-  .style('height', '100%')
+  .style('width', '70%')
+  .style('height', '70%')
   // .attr('transform', `translate(${margin.left}, ${margin.top})`)
   // .property('value', initialValue);
 
@@ -172,7 +172,7 @@ function brushableScatterplot(crashData, divelement) {
 
   var x = d3.scaleLinear()
     .domain([0, 24])
-    .range([ 0, 250 ]);
+    .range([ 0, 400 ]);
 
 
   var y = d3.scaleLinear()
