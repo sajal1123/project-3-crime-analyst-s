@@ -1,5 +1,5 @@
 margin = ({top: 10, right: 20, bottom: 50, left: 105});
-visWidth = 250;
+visWidth = 500;
 visHeight = 250;
 color = d3.scaleOrdinal().domain('lighting_condition').range(d3.schemeCategory10);
 highlight_color = "#66FF22";
@@ -171,7 +171,7 @@ function brushableScatterplot(crashData, divelement) {
 
   var x = d3.scaleLinear()
     .domain([0, 24])
-    .range([ 0, 250 ]);
+    .range([ 0, 500 ]);
 
 
   var y = d3.scaleLinear()
