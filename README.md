@@ -11,10 +11,8 @@ We aim to perform an analysis of the traffic crashes that have taken place in th
 ## Datasets
 For this project, we have used the following datasets:
 1. Traffic Crashes.js
-
- _Traffic Crashes.js_ contains records of all the crashes that took place in Chicago in 2021.
  
- _Traffic Crashes.js_ is a merged dataset made after cleaning and processing the Crashes and People dataset. We took a random sample of 2500 rows to avoid overplotting.
+ _Traffic_Crashes.js_ is a merged dataset made after cleaning and processing the Crashes and People dataset. We took a random sample of 2500 rows to avoid overplotting.
 
 ## Questions regarding the data provided
 **Domain Question**
