@@ -79,7 +79,7 @@ We can see that younger people tend to get in more crashes around midnight, and 
 
 We also made another multiple linked view visualization using a clickable bar chart (Month/Number of Crashes) and a set of static bar charts that change each time a bar from the interactive bar chart is clicked. These static bar charts describe other metrics that measure the number of crashes made in certain environments(weather, road, and lighting conditions).
 
-[INSERT MULTI LINKED BAR CHART PICS HERE]
+**[INSERT MULTI LINKED BAR CHART PICS HERE]**
 
 From this, we can see that all through the year, most crashes occurred on a road with no defects, during clear skies and in the daylight.
 
