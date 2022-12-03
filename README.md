@@ -6,7 +6,7 @@ https://zofi107.github.io/project-3-crime-analyst-s/
 https://observablehq.com/d/c867deaebd8238d6
 
 ## Objective
-We aim to perform an analysis of the traffic crashes that have taken place in the city of Chicago in 2021. To perform this analysis, we looked at the frequency distributions of various types of crashes and why/when they were caused. Building upon those observations, we identified the reasons for these crashes. We also briefly observed the aggregation of crashes by month.
+We aim to perform an analysis of the traffic crashes that have taken place in the city of Chicago in 2021. To perform this analysis, we looked at the frequency distributions of various types of crashes and why/when they were caused. Building upon those observations, we identified the reasons for these crashes. We also observed the aggregation of crashes by month. Further, we used interactive plots to examine the damaged caused by crashes, as well as their spatio-temporal distribution.
 
 ## Datasets
 For this project, we have used the following datasets:
@@ -30,16 +30,19 @@ Before beginning our analysis, we came up with the following three hypotheses:
 1. People in their prime tend to have more crashes
 2. There are more crashes in summer than winter
 3. Bad driving conditions lead to more crashes
+4. The Downtown area has more crashes than other areas. 
 
 ## Data Preprocessing
-The Traffic_Crashes_Medium dataset is the most important one for our analysis. It contains important information about the crashes such as the age, injuries, weather condition, hour, day, month, time, physical condition of the driver, whether there was a road defect or not, etc. The following screen grabs contain the relevant statistics that describe this dataset.
+The Traffic_Crashes_Medium dataset is the most important one for our analysis. It contains important information about the crashes such as the age, injuries, weather condition, hour, day, month, time, physical condition of the driver, whether there was a road defect or not, etc. The following screen grab contains the relevant statistics that describe this dataset. Below is a screenshot of the dataset from Project 2.
 
 ![Columns](./markdown%20pics/columns.png)
+
+We converted this data to a json file using Pandas and used the json data for our analysis.
 
 ## Plotting the Data
 
 ## 1. Static Plots
-To begin, we plotted the frequency of crashes by month.
+In Project 2, we had plotted the frequency of crashes by month.
 
 ![Crashes per month](./markdown%20pics/crashes_per_month.png)
 
@@ -53,35 +56,43 @@ In order to effectively compare the statistics for summers and winters, we used 
 
 Comparison of weather conditions at time of crash.
 
-![Weather Conditions Summer](./markdown%20pics/wc_summer.png)
-![Weather Conditions Winters](./markdown%20pics/wc_winters.png)
-![Weather Conditions All Year](./markdown%20pics/wc_ay.png)
-![Weather GIF](./markdown%20pics/weather.gif)
+![Weather Conditions Summer](./screenshots/int-bar-summersPNG.PNG)
+![Weather Conditions Winters](./screenshots/int-bar-winter.PNG)
+![Weather Conditions All Year](./screenshots/int-bar-all-year.PNG)
 
-Comparison of road conditions at time of crash.
-
-![Road Conditions Summers](./markdown%20pics/rc_summers.png)
-![Road Conditions Winters](./markdown%20pics/rc_winters.png)
-![Road Conditions All Year](./markdown%20pics/rc_ay.png)
-![Road GIF](./markdown%20pics/road.gif)
 
 These plots don't show a definitive increase in car crashes in poor driving conditions- as most of the crashes occured when the weather was clear and the road was dry.
 
-## Linked Views
+## 3. Multi-Linked View 1
 
-Finally, we used a linked interactive view plot to examine the damage caused across demographics and at various times of day. To do so, we used a brushable scatterplot(Hour of day v/s Age of driver) and a set of bar plots describing the metrics that measure damage(monetary damage, number of injuries involved, and the most severe injury suffered.)
+Next up, we used a linked interactive view plot to examine the damage caused across demographics and at various times of day. To do so, we used a brushable scatterplot(Hour of day v/s Age of driver) and a set of bar plots describing the metrics that measure damage(monetary damage, number of injuries involved, and the most severe injury suffered.)
+Note that the crashes are plotted using "minute of day" as the x coordinate, however, the x-axis is kept as "hour of day" for easy of interpretability.
 
-![Linked View Static](./markdown%20pics/lv_static.png)
-![Linked View Selection](./markdown%20pics/lv_selection.png)
-![Linked View GIF](./markdown%20pics/linked.gif)
+![Linked View](./screenshots/br_scatterplot.PNG)
+![Linked View Selection](./screenshots/br_scatterplot-brushed.PNG)
 
 We can see that younger people tend to get in more crashes around midnight, and most of the crashes occur in the evening time.
 
-We also made another multiple linked view visualization using a clickable bar chart (Month/Number of Crashes) and a set of static bar charts that change each time a bar from the interactive bar chart is clicked. These static bar charts describe other metrics that measure the number of crashes made in certain environments(weather, road, and lighting conditions).
+# 4. Multi-Linked View 2
 
-**[INSERT MULTI LINKED BAR CHART PICS HERE]**
+Building upon the static plot in section 1, we made another multiple linked view visualization using a clickable bar chart (Month/Number of Crashes) and a set of static bar charts that change each time a bar from the interactive bar chart is clicked. These static bar charts describe other metrics that measure the number of crashes made in certain environments(weather, road, and lighting conditions).
+
+![Multilinked Bar Chart](./screenshots/multi-linked-bar.PNG)
 
 From this, we can see that all through the year, most crashes occurred on a road with no defects, during clear skies and in the daylight.
+
+# 5. Spatial View
+
+Finally, we plotted the crashes on a map of Chicago to explore their distribution. To increase the explorability, we added a slider that allows the user to examine the crashes throughout the day- across different hours. The map also has zooming capability.
+
+![Map initial](./screenshots/map-initial.PNG)
+![Map zoomed](./screenshots/map-downtown-5pm.PNG)
+
+Upon exploring the map, we discover that during the early hours of the morning as well the evening hours, the crashes tend to happen outside the main city. And during the daytime, the crashes are mostly concentrated to the downtown area. A comparison of crash distributions at 7AM, 12PM, and 8PM is given below.
+
+![morning](./screenshots/chicago-7am.PNG)
+![noon](./screenshots/chicago-12pm.PNG)
+![evening](./screenshots/chicago-8pm.PNG)
 
 ## Revisiting our Hypotheses
 
@@ -91,9 +102,10 @@ Let's take a look at our initial hypotheses and discover how they hold up.
 2. There are more crashes in summer than winter _*Correct!*_
 3. Bad driving conditions lead to more crashes
 _*Incorrect!*_
+4. The Downtown area has more crashes than other areas. _*Partially Correct!*_
 
 ## Conclusion
 
-In this project, we examined the traffic crashes in Chicago for 2021 and saw how various metrics behave under specific circumstances. It was found that most of the crashes occur in ideal driving conditions- implying negligence on the driver's part. We also used an interactive brushable scatterplot- linked with bar charts- to study the distribution of traffic crashes across demographics throughout the day.
+In this project, we examined the traffic crashes in Chicago for 2021 and saw how various metrics behave under specific circumstances. It was found that most of the crashes occur in ideal driving conditions- implying negligence on the driver's part. We also used an interactive brushable scatterplot- linked with bar charts- to study the distribution of traffic crashes across demographics throughout the day. Using an interactive bar chart, we further analyzed the impact of driving conditions on crashes. Finally, we plotted the crashes on a map of Chicago and explored the spatio-temporal distribution of crashes around the city.
 
-This concludes our project, thank you for reading.
+This concludes our project, thank you for reading!
