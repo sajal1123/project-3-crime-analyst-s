@@ -2,7 +2,7 @@
 # Traffic Crashes-2021
 ## Link to Github Page
 https://zofi107.github.io/project-3-crime-analyst-s/
-## Link to Observable
+## Link to Observable code used to import project 2 code onto the webpage:
 https://observablehq.com/d/c867deaebd8238d6
 
 ## Objective
