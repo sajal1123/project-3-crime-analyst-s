@@ -8,50 +8,75 @@
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://d3js.org/colorbrewer.v1.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
     <script src="us-states.js"></script>
     <!-- <script src="map.js"></script> -->
     
-    <style class = "scroll">
-        #map {
+    <head>
+        <style class="scroll">
+            #title {
+                text-align: center;
+                margin: auto;
+                width: 80%;
+                display: block;
+                text-shadow: 5px;
+            }
+        
+            #authors {
+                text-align: center;
+                margin: auto;
+                width: 80%;
+                display: block;
+            }
+        
+            #nav-container {
+                text-align: center;
+                margin: auto;
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+            }
+        
+            #nav {
+                margin: 10px;
+                padding: 10px;
+            }
+        </style>
+        
+        </head>
+        <body>
+            <div>
+                <br>
+                <br>
+                <br>
+                <br><br>
+                <br>
+                <br>
+                <br><br>
+                <br>
+                <br>
+                <br><br>
+                <br>
+                <br>
+                <br>
+            </div>
+            <h1 id="title">Chicago Traffic Crashes</h1>
+            <p id="authors">Done by Jibreel Mohamed and Sajal Chandra</p>
 
-            position: absolute;
-            width:80%;
-            height: 100%;
-        }
-        #main {
-            position: absolute;
-            left: 35%;
-            top: 20%;
-        }
-        #title {
-            position: inherit;
-            left: 120px;
-        }
-        #authors {
-            position: inherit;
-            left: 100px;
-            top: 80px;
-        }
-    </style>
-
-</head>
-<body>
-    <div id="main">
-    <a href="Multilinked-Bar.html">
-        <button>Multi Linked Bar Chart</button>
-    </a>
-    <a href="scatter.html">
-        <button>Brushable Scatterplot</button>
-    </a>
-    <a href="barInt.html">
-        <button>Interactive Bar Chart</button>
-    <a href="map.html">
-        <button>Map</button>
-    </a>
-    <!-- <div id="map"></div> -->
-    <h2 id="title">Chicago Traffic Crashes</h2>
-    <p id="authors">Done by Jibreel Mohamed and Sajal Chandra</p>
-    </div>
-</body>
-
+            <div id="nav-container">
+                <a href="#">
+                    <button id="nav">Home</button>
+                </a>
+                <a href="Multilinked-Bar.html">
+                    <button id="nav">Multi Linked Bar Chart</button>
+                </a>
+                <a href="scatter.html">
+                    <button id="nav">Brushable Scatterplot</button>
+                </a>
+                <a href="map.html">
+                    <button id="nav">Map</button>
+                </a>
+            </div>
+        </body>
+                    
 </html>

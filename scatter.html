@@ -9,55 +9,68 @@
     <script src="brushable_scatterplot.js"></script>
     <script src="crashData.js"></script>
     <!-- <script src="main.js"></script> -->
-    
+    <link rel="stylesheet" href="./style.css">
+  
     <style class = "scroll">
         #staticbar { 
             position: absolute;
             width: 100%;
             height: 100%;
-            left: -30px;
+            left: 10%;
             top: 10%; 
         }
 
         #hbar1 {
             position: absolute;
-            top: 20%;
-            left: 40%;
+            top: 17%;
+            left: 50%;
             width: 50%;
             height: 90%; 
         }
         #hbar2 {
             position: absolute;
             top: 70%;
-            left: 40%;
+            left: 50%;
             width: 50%;
             height: 90%; 
         }
         #hbar3 {
             position: absolute;
-            left: -100px;
+            left: 7%;
             top: 70%;
             width: 75%;
             height: 90%; 
         }
+        h1 {
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            margin: 40px 0;
+        }
+
+        div#staticbar, div#hbar1, div#hbar2, div#hbar3 {
+            width: 800px;
+            margin: 6% auto;
+            
+        }
+
     </style>
 
 </head>
 <body>
     <a href="index.html">
-        <button>Home</button>
+        <button id="nav">Home</button>
     </a>
     <a href="Multilinked-Bar.html">
-        <button>Multi Linked Bar Chart</button>
+        <button id="nav">Multi Linked Bar Chart</button>
     </a>
     <a href="scatter.html">
-        <button>Brushable Scatterplot</button>
+        <button id="nav">Brushable Scatterplot</button>
     </a>
-    <a href="barInt.html">
-        <button>Interactive Bar Chart</button>
     <a href="map.html">
-        <button>Map</button>
+        <button id="nav">Map</button>
     </a>
+    <br>
     <div><br></div>
     <h1>Multi-linked Scatterplot</h1>
 

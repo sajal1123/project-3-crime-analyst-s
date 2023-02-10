@@ -13,11 +13,15 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
     <script src="mapPlot.js"></script>
+    <link rel="stylesheet" href="./style.css">
 
     <style>
         #map {
             height: 700px;
             width: 900px;
+            border: 15px;
+            border-radius: 5px;
+            border-color: black;
         }
 
         #time {
@@ -30,29 +34,40 @@
 </head>
 <body>
     <a href="index.html">
-        <button>Home</button>
+        <button id="nav">Home</button>
     </a>
     <a href="Multilinked-Bar.html">
-        <button>Multi Linked Bar Chart</button>
+        <button id="nav">Multi Linked Bar Chart</button>
     </a>
     <a href="scatter.html">
-        <button>Brushable Scatterplot</button>
+        <button id="nav">Brushable Scatterplot</button>
     </a>
-    <a href="barInt.html">
-        <button>Interactive Bar Chart</button>
     <a href="map.html">
-        <button>Map</button>
+        <button id="nav">Map</button>
     </a>
-    
-    <h2>Crash Spread around Chicago</h2>
-    <div id="map"></div>
-
-    <label for="slider">    Hour of Day:</label>
-    <br><input id="time" name="slider" type="range" min="0" max="23" step="1"  value="12">
-    <output id="output"></output>
     <br>
-    <a href="map.html">
-        <button>Reset</button>
-    </a>
-</body>
+    <style>
+        #container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+        }
+      </style>
+      
+      <div id="container">
+        <h2>Crash Spread around Chicago</h2>
+        <div id="map"></div>
+      
+        <label for="slider">Hour of Day:</label>
+        <br>
+        <input id="time" name="slider" type="range" min="0" max="23" step="1" value="12">
+        <output id="output" value="All Day"></output>
+        <br>
+        <a href="map.html">
+          <button>Reset</button>
+        </a>
+      </div>
+      </body>
 </html>
